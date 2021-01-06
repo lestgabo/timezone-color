@@ -2,12 +2,13 @@ import React, {useState, useEffect} from 'react';
 
 import CitiesContext from './CitiesContext';
 
-export const CitiesProvider = () => {
+export const CitiesProvider = ({ children }) => {
     const [data, setData] = useState(null);
     
     useEffect( () => {
         const fetchData = async () => {
-            const response = await fetch('http://worldtimeapi.org/api/timezone');
+            const PROXY_URL = 'https://cors-anywhere.herokuapp.com/';
+            const response = await fetch(`${PROXY_URL}http://worldtimeapi.org/api/timezone`);
             const newData = await response.json();
 
             setData(newData);
@@ -17,9 +18,7 @@ export const CitiesProvider = () => {
 
     if (data) {
         // data is seen -> so api fetch is working
-        // console.log('data: ', data) 
-        return <CitiesContext.Provider value={data}>{this.props.children}</CitiesContext.Provider>;
-        
+        return <CitiesContext.Provider value={data}>{children}</CitiesContext.Provider>;
     } else {
         return null;
     }
