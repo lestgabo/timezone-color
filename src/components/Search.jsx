@@ -5,7 +5,8 @@ import CitiesContext from '../context/CitiesContext';
 
 export const Search = ({getCity}) => {
     const cities = useContext(CitiesContext);
-    const [selectedCity, setSelectedCity] = useState({value: "America/Vancouver", label: "America, Vancouver"});
+    const [selectedCity, setSelectedCity] = useState(null);
+    // const [selectedCity, setSelectedCity] = useState({value: "America/Vancouver", label: "America, Vancouver"});
 
     const handleOnChange = (selected) => {
         setSelectedCity(selected);

@@ -20,6 +20,7 @@ export const Time = ({ selectedCity }) => {
     const [timeDifference, setTimeDifference] = useState(null)
     const [liveTime, setLiveTime] = useState(null)
     const [timeNow, setTimeNow] = useState(new Date().getTime());
+    const [props, setProps] = useState({ color: `rgb(0,0,0)` })
 
     // updates selected city
     useEffect(() => {
@@ -30,10 +31,11 @@ export const Time = ({ selectedCity }) => {
     useEffect( () => {
         const fetchData = async () => {
             if (city) {
-                const response = await fetch(`http://worldtimeapi.org/api/timezone/${city.value}`);
+                const response = await fetch(`http://worldtimeapi.org/api/timezone/${city.value}`);    
                 const newData = await response.json();
-          
+
                 if (!newData.error) {
+                    /** now using live time */
                     let datetime = newData.datetime;
                     // datetime: 2021-01-07T03:14:52.001241-05:00 -> only want hours minutes and seconds
                     let time = datetime.split('').splice(11, 8).join('')
@@ -51,7 +53,8 @@ export const Time = ({ selectedCity }) => {
                     setMinutes(minuteRatio);
                     setSeconds(secondRatio);
 
-                    // make realtime updating time
+
+                    // make live time
                     /**
                         algorithm: get city time, subtract with localtime, get time difference
                         use localtime to get new time every second, and then add the time difference to get city time
@@ -84,6 +87,13 @@ export const Time = ({ selectedCity }) => {
         if (citySeconds < 10) citySeconds = '0'+ citySeconds
         setLiveTime(`${cityHours}:${cityMinutes}:${citySeconds}`);
 
+        // ratio the numbers compared to its RGB
+        let hourRatio = Math.floor((cityHours/24) * 255)
+        let minuteRatio = Math.floor((cityMinutes/60) * 255)
+        let secondRatio = Math.floor((citySeconds/60) * 255)
+                    
+        setProps({ color: `rgb(${hourRatio},${minuteRatio},${secondRatio})` })
+
         return () => clearInterval(timerID)
     }, [timeDifference, timeNow])
 
@@ -92,7 +102,6 @@ export const Time = ({ selectedCity }) => {
     }
 
     // color of bg -> tried hex but no variance in color, using rgb
-    const props = {color: `rgb(${hours},${minutes},${seconds})`}
     const classes = useStyles(props);
 
     return (
@@ -103,7 +112,7 @@ export const Time = ({ selectedCity }) => {
                     <Typography variant='h4'>What time and color is it at {city.label}?</Typography>
                     <br />
                     <br />
-                    <Typography variant='h1' gutterBottom>It is {liveTime} and color {props.color} at {city.label}.</Typography>
+                    <Typography variant='h1' gutterBottom>It is {liveTime} and color {props.color} in {city.label}.</Typography>
                 </>
             ) : null}
         </div>
