@@ -2,9 +2,14 @@
 
 by Lestley Gabo
 
+```
+The task I would like you to complete is to pick a public API you like, scrape some data from it and present it in an interesting way using React.
+Please provide me with a github repo that has a README file that explains how to run the project locally.
+```
+
 # Timezone Color
 
-Goal: pick a city and it should match the time with a color. Time to hex based color. (done)
+Goal: pick a city and it should match the time with a color. Time is ratiod (24:255 for hours, 60:255 for minutes and seconds) to RGB based color. (done)
 
 # API used to get time
 

@@ -109,7 +109,7 @@ export const Time = ({ selectedCity }) => {
             { city ? (
                 <>
                     <br />
-                    <Typography variant='h4'>What time and color is it at {city.label}?</Typography>
+                    <Typography variant='h4'>What time-color is it in {city.label}?</Typography>
                     <br />
                     <br />
                     <Typography variant='h1' gutterBottom>It is {liveTime} and color {props.color} in {city.label}.</Typography>
