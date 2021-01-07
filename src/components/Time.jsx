@@ -17,17 +17,9 @@ export const Time = ({ selectedCity }) => {
     const [hours, setHours] = useState(null)
     const [minutes, setMinutes] = useState(null)
     const [seconds, setSeconds] = useState(null)
-    // const [month, setMonth] = useState(null)
-    // const [day, setDay] = useState(null)
-    // const [weekDay, setWeekDay] = useState({
-    //     0: 'Sun',
-    //     1: 'Mon',
-    //     2: 'Tue',
-    //     3: 'Wed',
-    //     4: 'Thu',
-    //     5: 'Fri',
-    //     6: 'Sat',
-    // })
+    const [timeDifference, setTimeDifference] = useState(null)
+    const [liveTime, setLiveTime] = useState(null)
+    const [timeNow, setTimeNow] = useState(new Date().getTime());
 
     // updates selected city
     useEffect(() => {
@@ -59,19 +51,45 @@ export const Time = ({ selectedCity }) => {
                     setMinutes(minuteRatio);
                     setSeconds(secondRatio);
 
-                    /** adds date, but too much data and looks cluttered */
-                    // let date = datetime.split('').splice(0,10).join('').split('-');
-                    // let [year, month, day] = date;
-                    // let formattedDate = new Date(parseInt(year,10),parseInt(month-1,10),parseInt(day,10))
-                    // let weekDayNum = formattedDate.getDay()
-                    // setDay(formattedDate.getDate())
-                    // setMonth(formattedDate.getMonth())
-                    // if (weekDay) setWeekDay(weekDay[parseInt(weekDayNum,10)])
+                    // make realtime updating time
+                    /**
+                        algorithm: get city time, subtract with localtime, get time difference
+                        use localtime to get new time every second, and then add the time difference to get city time
+                     */
+                    let timeNow = new Date();
+                    let nowHours = timeNow.getHours()
+                    let nowMinutes = timeNow.getMinutes()
+                    let nowSeconds = timeNow.getSeconds()
+                    let tempNow = new Date(0,0,0, nowHours, nowMinutes, nowSeconds)
+                    let tempCity = new Date(0,0,0,hours,minutes,seconds)
+                    // convert to milliseconds and get difference
+                    setTimeDifference(tempCity.getTime() - tempNow.getTime())
                 }
             }
         }
         fetchData();
     }, [city])
+
+    // live time
+    useEffect( () => {
+        const timerID = setInterval( () => tick(), 1000 )
+
+        let timeCity = new Date(timeNow + timeDifference);
+        let cityHours = timeCity.getHours()
+        let cityMinutes = timeCity.getMinutes()
+        let citySeconds = timeCity.getSeconds()
+        // pad 0 to single digits
+        if (cityHours < 10) cityHours = '0'+ cityHours
+        if (cityMinutes < 10) cityMinutes = '0'+ cityMinutes
+        if (citySeconds < 10) citySeconds = '0'+ citySeconds
+        setLiveTime(`${cityHours}:${cityMinutes}:${citySeconds}`);
+
+        return () => clearInterval(timerID)
+    }, [timeDifference, timeNow])
+
+    const tick = () => {
+        setTimeNow(new Date().getTime())
+    }
 
     // color of bg -> tried hex but no variance in color, using rgb
     const props = {color: `rgb(${hours},${minutes},${seconds})`}
@@ -85,7 +103,7 @@ export const Time = ({ selectedCity }) => {
                     <Typography variant='h4'>What time and color is it at {city.label}?</Typography>
                     <br />
                     <br />
-                    <Typography variant='h1' gutterBottom>It is {time} and color {props.color} at {city.label}.</Typography>
+                    <Typography variant='h1' gutterBottom>It is {liveTime} and color {props.color} at {city.label}.</Typography>
                 </>
             ) : null}
         </div>

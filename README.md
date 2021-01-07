@@ -4,7 +4,13 @@ by Lestley Gabo
 
 # Timezone Color
 
-Goal: pick a city and it should match the time with a color. Time to hex based color.
+Goal: pick a city and it should match the time with a color. Time to hex based color. (done)
+
+# API used to get time
+
+http://worldtimeapi.org/
+
+-   unfortunately it's super slow. But it's free and doesn't need a token.
 
 ## Available Scripts
 
