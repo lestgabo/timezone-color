@@ -17,6 +17,17 @@ export const Time = ({ selectedCity }) => {
     const [hours, setHours] = useState(null)
     const [minutes, setMinutes] = useState(null)
     const [seconds, setSeconds] = useState(null)
+    // const [month, setMonth] = useState(null)
+    // const [day, setDay] = useState(null)
+    // const [weekDay, setWeekDay] = useState({
+    //     0: 'Sun',
+    //     1: 'Mon',
+    //     2: 'Tue',
+    //     3: 'Wed',
+    //     4: 'Thu',
+    //     5: 'Fri',
+    //     6: 'Sat',
+    // })
 
     // updates selected city
     useEffect(() => {
@@ -27,8 +38,6 @@ export const Time = ({ selectedCity }) => {
     useEffect( () => {
         const fetchData = async () => {
             if (city) {
-                // const PROXY_URL = 'https://cors-anywhere.herokuapp.com';
-                // const response = await fetch(`${PROXY_URL}/http://worldtimeapi.org/api/timezone/${city.value}`);
                 const response = await fetch(`http://worldtimeapi.org/api/timezone/${city.value}`);
                 const newData = await response.json();
           
@@ -49,6 +58,15 @@ export const Time = ({ selectedCity }) => {
                     setHours(hourRatio);
                     setMinutes(minuteRatio);
                     setSeconds(secondRatio);
+
+                    /** adds date, but too much data and looks cluttered */
+                    // let date = datetime.split('').splice(0,10).join('').split('-');
+                    // let [year, month, day] = date;
+                    // let formattedDate = new Date(parseInt(year,10),parseInt(month-1,10),parseInt(day,10))
+                    // let weekDayNum = formattedDate.getDay()
+                    // setDay(formattedDate.getDate())
+                    // setMonth(formattedDate.getMonth())
+                    // if (weekDay) setWeekDay(weekDay[parseInt(weekDayNum,10)])
                 }
             }
         }
@@ -67,7 +85,7 @@ export const Time = ({ selectedCity }) => {
                     <Typography variant='h4'>What time and color is it at {city.label}?</Typography>
                     <br />
                     <br />
-                    <Typography variant='h1' gutterBottom>It is currently {time} and color {props.color} at {city.label}.</Typography>
+                    <Typography variant='h1' gutterBottom>It is {time} and color {props.color} at {city.label}.</Typography>
                 </>
             ) : null}
         </div>

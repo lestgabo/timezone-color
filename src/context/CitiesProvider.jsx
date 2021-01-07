@@ -7,8 +7,6 @@ export const CitiesProvider = ({ children }) => {
     
     useEffect( () => {
         const fetchData = async () => {
-            // const PROXY_URL = 'https://cors-anywhere.herokuapp.com';
-            // const response = await fetch(`${PROXY_URL}/http://worldtimeapi.org/api/timezone`);
             const response = await fetch(`http://worldtimeapi.org/api/timezone`);
             const newData = await response.json();
 
