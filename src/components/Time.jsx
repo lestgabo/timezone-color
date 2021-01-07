@@ -6,8 +6,7 @@ const useStyles = makeStyles({
     root: {
         background: (props) => props.color,
         color: 'white',
-        '-webkit-text-stroke-width': '0.5px',
-        '-webkit-text-stroke-color': 'black',
+        textShadow: '0 0 2px #000'
     }
 })
 
@@ -54,11 +53,6 @@ export const Time = ({ selectedCity }) => {
         }
         fetchData();
     }, [city])
-
-    // console.log('time: ', time)
-    // console.log('hours: ', hours)
-    // console.log('minutes: ', minutes)
-    // console.log('seconds: ', seconds)
 
     // color of bg -> tried hex but no variance in color, using rgb
     const props = {color: `rgb(${hours},${minutes},${seconds})`}
