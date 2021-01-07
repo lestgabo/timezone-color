@@ -8,7 +8,6 @@ const useStyles = makeStyles({
         color: 'white',
         '-webkit-text-stroke-width': '0.5px',
         '-webkit-text-stroke-color': 'black',
-
     }
 })
 
@@ -27,11 +26,9 @@ export const Time = ({ selectedCity }) => {
     // calls api to get time of city
     useEffect( () => {
         const fetchData = async () => {
-            // const PROXY_URL = 'https://cors-anywhere.herokuapp.com';
-            // const response = await fetch(`${PROXY_URL}/http://worldtimeapi.org/api/timezone/${city}`);
-
             if (city) {
-                console.log('city.value: ', city.value)
+                // const PROXY_URL = 'https://cors-anywhere.herokuapp.com';
+                // const response = await fetch(`${PROXY_URL}/http://worldtimeapi.org/api/timezone/${city.value}`);
                 const response = await fetch(`http://worldtimeapi.org/api/timezone/${city.value}`);
                 const newData = await response.json();
           
