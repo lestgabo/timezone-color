@@ -17,8 +17,33 @@ export const CitiesProvider = ({ children }) => {
     }, [])
 
     if (data) {
-        // data is seen -> so api fetch is working
-        return <CitiesContext.Provider value={data}>{children}</CitiesContext.Provider>;
+        // data is seen, make it searchable and have clean labels
+        // search schema is: 
+        // [{value: 'chocolate', label:'Chocolate'}, {value: 'vanilla', label:'Vanilla'}]
+        let searchableCity = []
+        data.forEach((value) => {
+            // value: America/Vancouver
+
+            // remove none city and split city from its region
+            if (value.includes('/')) {
+                let array = value.split('/')
+                // array: [ "America", "Vancouver" ]
+                let city = array[array.length-1]
+                // city: Vancouver
+
+                // if 'New_York', we want 'New York'
+                if (city.includes('_')) {
+                    let temp = city.split('_')
+                    // temp: [ 'New', 'York']
+                    city = temp.join(' ')
+                    // city: New York
+                }
+
+                // final result: {value: "America/New_York", label: "New York"}
+                searchableCity.push({value: value, label: city})
+            }
+        })
+        return <CitiesContext.Provider value={searchableCity}>{children}</CitiesContext.Provider>;
     } else {
         return null;
     }

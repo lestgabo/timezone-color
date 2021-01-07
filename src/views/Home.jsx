@@ -4,8 +4,8 @@ import CitiesContext from '../context/CitiesContext';
 export const Home = () => {
     const cities = useContext(CitiesContext)
 
-    console.log('INSIDE Home');
-    console.log('cities: ', cities);
+    // console.log('INSIDE Home');
+    // console.log('cities: ', cities);
     return (
         <>
             {/* <CitiesContext.Consumer>
@@ -14,7 +14,7 @@ export const Home = () => {
                     value.a
                 }
             </CitiesContext.Consumer> */}
-            Here are the cities {cities}
+            {/* Here are the cities {cities} */}
         </>
     )
 }
