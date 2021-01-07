@@ -6,7 +6,8 @@ const useStyles = makeStyles({
     root: {
         background: (props) => props.color,
         color: 'white',
-        textShadow: '0 0 2px #000'
+        textShadow: '0 0 2px #000',
+        height: 'calc(100vh - 38px)'
     }
 })
 
@@ -62,7 +63,10 @@ export const Time = ({ selectedCity }) => {
         <div className={classes.root}>
             { city ? (
                 <>
-                    <Typography variant='h3'>What time and color is it at {city.label}?</Typography>
+                    <br />
+                    <Typography variant='h4'>What time and color is it at {city.label}?</Typography>
+                    <br />
+                    <br />
                     <Typography variant='h1' gutterBottom>It is currently {time} and color {props.color} at {city.label}.</Typography>
                 </>
             ) : null}
