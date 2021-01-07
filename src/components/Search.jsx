@@ -8,8 +8,7 @@ export const Search = ({getCity}) => {
     const [selectedCity, setSelectedCity] = useState(null);
 
     const handleOnChange = (selected) => {
-        const optionValue = selected.value;
-        setSelectedCity(optionValue);
+        setSelectedCity(selected);
     }
 
     // calls getCity function passed from parent if selected city updates

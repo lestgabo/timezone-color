@@ -1,10 +1,17 @@
 import React, { useState, useEffect }  from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
-const defaultTime = new Date();
+const useStyles = makeStyles({
+    root: {
+        background: (props) => props.color,
+        color: 'white',
+
+    }
+})
 
 export const Time = ({ selectedCity }) => {
-    const [city, setCity] = useState('America/Vancouver');
-    const [data, setData] = useState({datetime: defaultTime.toLocaleString()});
+    const [city, setCity] = useState(null);
     const [time, setTime] = useState(null);
     const [hours, setHours] = useState(null)
     const [minutes, setMinutes] = useState(null)
@@ -20,21 +27,30 @@ export const Time = ({ selectedCity }) => {
         const fetchData = async () => {
             // const PROXY_URL = 'https://cors-anywhere.herokuapp.com';
             // const response = await fetch(`${PROXY_URL}/http://worldtimeapi.org/api/timezone/${city}`);
-            const response = await fetch(`http://worldtimeapi.org/api/timezone/${city}`);
-            const newData = await response.json();
-      
-            if (!newData.error) {
-                let datetime = newData.datetime;
-                // datetime: 2021-01-07T03:14:52.001241-05:00 -> only want hours minutes and seconds
-                let time = datetime.split('').splice(11, 8).join('')
-                let hours = time.slice(0,2)
-                let minutes = time.slice(3,5)
-                let seconds = time.slice(6,8)
-        
-                setTime(time)
-                setHours(hours);
-                setMinutes(minutes);
-                setSeconds(seconds);
+
+            if (city) {
+                console.log('city.value: ', city.value)
+                const response = await fetch(`http://worldtimeapi.org/api/timezone/${city.value}`);
+                const newData = await response.json();
+          
+                if (!newData.error) {
+                    let datetime = newData.datetime;
+                    // datetime: 2021-01-07T03:14:52.001241-05:00 -> only want hours minutes and seconds
+                    let time = datetime.split('').splice(11, 8).join('')
+                    let hours = time.slice(0,2)
+                    let minutes = time.slice(3,5)
+                    let seconds = time.slice(6,8)
+
+                    // ratio the numbers compared to its RGB
+                    let hourRatio = (hours/24) * 255
+                    let minuteRatio = (minutes/60) * 255
+                    let secondRatio = (seconds/60) * 255
+            
+                    setTime(time)
+                    setHours(hourRatio);
+                    setMinutes(minuteRatio);
+                    setSeconds(secondRatio);
+                }
             }
         }
         fetchData();
@@ -44,7 +60,19 @@ export const Time = ({ selectedCity }) => {
     // console.log('hours: ', hours)
     // console.log('minutes: ', minutes)
     // console.log('seconds: ', seconds)
+
+    // color of bg -> tried hex, no variance in color, using rgb
+    const props = {color: `rgb(${hours},${minutes},${seconds})`}
+    const classes = useStyles(props);
+
     return (
-        <span>{city}</span>
+        <div className={classes.root}>
+            { city ? (
+                <>
+                    <Typography variant='h1' gutterBottom>It is currently {time} at {city.label}.</Typography>
+                    <span>{props.color}</span>
+                </>
+            ) : null}
+        </div>
     )
 }
