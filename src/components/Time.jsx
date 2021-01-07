@@ -13,10 +13,6 @@ const useStyles = makeStyles({
 
 export const Time = ({ selectedCity }) => {
     const [city, setCity] = useState(null);
-    const [time, setTime] = useState(null);
-    const [hours, setHours] = useState(null)
-    const [minutes, setMinutes] = useState(null)
-    const [seconds, setSeconds] = useState(null)
     const [timeDifference, setTimeDifference] = useState(null)
     const [liveTime, setLiveTime] = useState(null)
     const [timeNow, setTimeNow] = useState(new Date().getTime());
@@ -41,18 +37,7 @@ export const Time = ({ selectedCity }) => {
                     let time = datetime.split('').splice(11, 8).join('')
                     let hours = time.slice(0,2)
                     let minutes = time.slice(3,5)
-                    let seconds = time.slice(6,8)
-
-                    // ratio the numbers compared to its RGB
-                    let hourRatio = Math.floor((hours/24) * 255)
-                    let minuteRatio = Math.floor((minutes/60) * 255)
-                    let secondRatio = Math.floor((seconds/60) * 255)
-            
-                    setTime(time)
-                    setHours(hourRatio);
-                    setMinutes(minuteRatio);
-                    setSeconds(secondRatio);
-
+                    let seconds = time.slice(6,8)           
 
                     // make live time
                     /**
