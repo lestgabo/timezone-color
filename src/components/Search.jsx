@@ -1,14 +1,26 @@
-import React, { useContext }  from 'react';
+import React, { useContext, useState, useEffect }  from 'react';
 import Select from 'react-select';
 
 import CitiesContext from '../context/CitiesContext';
 
-export const Search = () => {
+export const Search = ({getCity}) => {
     const cities = useContext(CitiesContext);
+    const [selectedCity, setSelectedCity] = useState(null);
+
+    const handleOnChange = (selected) => {
+        const optionValue = selected.value;
+        setSelectedCity(optionValue);
+    }
+
+    // calls getCity function passed from parent if selected city updates
+    useEffect(()=>{
+        getCity(selectedCity)
+    }, [getCity, selectedCity])
 
     return (
         <Select 
             options={cities}
+            onChange={handleOnChange}
         />
     )
 }
