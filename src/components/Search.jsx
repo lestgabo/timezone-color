@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useContext }  from 'react';
 import Select from 'react-select';
 
+import CitiesContext from '../context/CitiesContext';
+
 export const Search = () => {
-    <Select 
-        defaultValue={}
-        options={}
-    />
+    const cities = useContext(CitiesContext);
+
+    return (
+        <Select 
+            options={cities}
+        />
+    )
 }

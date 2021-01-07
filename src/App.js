@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import { Home } from './views/Home';
 
+import Home from './views/Home';
 import { CitiesProvider } from './context/CitiesProvider';
 
 const App = () => {
