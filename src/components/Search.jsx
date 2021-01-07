@@ -20,6 +20,7 @@ export const Search = ({getCity}) => {
         <Select 
             options={cities}
             onChange={handleOnChange}
+            placeholder={`Search time zones...`}
         />
     )
 }

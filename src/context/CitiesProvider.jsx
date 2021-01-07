@@ -29,18 +29,18 @@ export const CitiesProvider = ({ children }) => {
             if (value.includes('/')) {
                 let array = value.split('/')
                 // array: [ "America", "Vancouver" ]
-                let city = array[array.length-1]
-                // city: Vancouver
+                let city = array.join(', ')
+                // city: America, Vancouver
 
                 // if 'New_York', we want 'New York'
                 if (city.includes('_')) {
                     let temp = city.split('_')
-                    // temp: [ 'New', 'York']
+                    // temp: [ 'America, New', 'York']
                     city = temp.join(' ')
                     // city: New York
                 }
 
-                // final result: {value: "America/New_York", label: "New York"}
+                // final result: {value: "America/New_York", label: "America, New York"}
                 searchableCity.push({value: value, label: city})
             }
         })

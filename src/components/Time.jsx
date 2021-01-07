@@ -6,6 +6,8 @@ const useStyles = makeStyles({
     root: {
         background: (props) => props.color,
         color: 'white',
+        '-webkit-text-stroke-width': '0.5px',
+        '-webkit-text-stroke-color': 'black',
 
     }
 })
@@ -42,9 +44,9 @@ export const Time = ({ selectedCity }) => {
                     let seconds = time.slice(6,8)
 
                     // ratio the numbers compared to its RGB
-                    let hourRatio = (hours/24) * 255
-                    let minuteRatio = (minutes/60) * 255
-                    let secondRatio = (seconds/60) * 255
+                    let hourRatio = Math.floor((hours/24) * 255)
+                    let minuteRatio = Math.floor((minutes/60) * 255)
+                    let secondRatio = Math.floor((seconds/60) * 255)
             
                     setTime(time)
                     setHours(hourRatio);
@@ -61,7 +63,7 @@ export const Time = ({ selectedCity }) => {
     // console.log('minutes: ', minutes)
     // console.log('seconds: ', seconds)
 
-    // color of bg -> tried hex, no variance in color, using rgb
+    // color of bg -> tried hex but no variance in color, using rgb
     const props = {color: `rgb(${hours},${minutes},${seconds})`}
     const classes = useStyles(props);
 
@@ -69,8 +71,8 @@ export const Time = ({ selectedCity }) => {
         <div className={classes.root}>
             { city ? (
                 <>
-                    <Typography variant='h1' gutterBottom>It is currently {time} at {city.label}.</Typography>
-                    <span>{props.color}</span>
+                    <Typography variant='h3'>What time and color is it at {city.label}?</Typography>
+                    <Typography variant='h1' gutterBottom>It is currently {time} and color {props.color} at {city.label}.</Typography>
                 </>
             ) : null}
         </div>
